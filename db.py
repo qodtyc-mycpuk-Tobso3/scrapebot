@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS leads (
 
 DEFAULT_JOBS = [
     ("github_trending", "GitHub Trending", "config", "configs/github_trending.json"),
-    ("books_toscrape", "Books to Scrape", "config", "configs/books_toscrape.json"),
-    ("quotes_toscrape", "Quotes to Scrape", "config", "configs/example.json"),
+    ("books_toscrape", "Books to Scrape", "config", "configs/books_to_scrape.json"),
+    ("quotes_toscrape", "Quotes to Scrape", "config", "configs/quotes_to_scrape.json"),
     ("hn", "Hacker News Front Page", "hn", None),
 ]
 
