@@ -1,5 +1,1 @@
-Procfile
-Notice:
-
-* No .txt
-* No extension
+web: gunicorn app:app --workers 1
