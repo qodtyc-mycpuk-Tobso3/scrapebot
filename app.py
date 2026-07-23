@@ -205,13 +205,9 @@ def download_leads(job_name, fmt):
 # --------------------------------------------------------------------------
 # Startup
 # --------------------------------------------------------------------------
-import os
-if os.path.exists("scrapebot.db"):
-    os.remove("scrapebot.db")
 
 db.init_db()
 start_scheduler()
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
