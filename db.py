@@ -80,7 +80,8 @@ def init_db() -> None:
         conn.executescript(SCHEMA)
         for name, label, kind, config_path in DEFAULT_JOBS:
             conn.execute(
-                "INSERT OR IGNORE INTO jobs (name, label, kind, config_path) VALUES (?, ?, ?, ?)",
+                "INSERT OR REPLACE INTO jobs (name, label, kind, config_path) VALUES (?, ?, ?, ?)"
+,
                 (name, label, kind, config_path),
             )
 
