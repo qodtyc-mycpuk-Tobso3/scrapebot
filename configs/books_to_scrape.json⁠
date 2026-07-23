@@ -1,0 +1,17 @@
+{
+  "name": "github_trending",
+  "url": "https://github.com/trending",
+  "mode": "static",
+  "item_selector": "article.Box-row",
+  "fields": [
+    { "name": "repo", "selector": "h2 a" },
+    { "name": "repo_url", "selector": "h2 a", "attr": "href" },
+    { "name": "description", "selector": "p" },
+    { "name": "language", "selector": "span[itemprop='programmingLanguage']" },
+    { "name": "stars_total", "selector": "a[href$='/stargazers']" },
+    { "name": "forks_total", "selector": "a:has(svg.octicon-repo-forked)" },
+    { "name": "stars_today", "selector": "span.d-inline-block.float-sm-right" }
+  ],
+  "output": "github_trending.csv",
+  "max_pages": 1
+}
