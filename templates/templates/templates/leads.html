@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ job['label'] }} - Leads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <p><a href="{{ url_for('dashboard') }}">&larr; back to dashboard</a></p>
+    <h1>{{ job['label'] }} - Leads</h1>
+    <p class="subtitle">Auto-extracted from the most recent run (rows with an email or phone number).</p>
+
+    <p>
+        <a href="{{ url_for('download_leads', job_name=job['name'], fmt='csv') }}">Download CSV</a> ·
+        <a href="{{ url_for('download_leads', job_name=job['name'], fmt='json') }}">Download JSON</a> ·
+        <a href="{{ url_for('download_leads', job_name=job['name'], fmt='vcard') }}">Download vCard</a>
+    </p>
+
+    {% if leads %}
+    <table>
+        <tr><th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Source</th></tr>
+        {% for lead in leads %}
+        <tr>
+            <td>{{ lead['name'] }}</td>
+            <td>{{ lead['email'] }}</td>
+            <td>{{ lead['phone'] }}</td>
+            <td>{{ lead['company'] }}</td>
+            <td><a href="{{ lead['source_url'] }}">{{ lead['source_url'] }}</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No leads found in the most recent run (no emails or phone numbers in the scraped data).</p>
+    {% endif %}
+</body>
+</html>
