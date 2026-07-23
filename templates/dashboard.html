@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ScrapeBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>ScrapeBot</h1>
+    <p class="subtitle">Scrapes on its own schedule. Check back whenever.</p>
+
+    <table>
+        <tr>
+            <th>Job</th>
+            <th>Last run</th>
+            <th>Status</th>
+            <th>Rows</th>
+            <th>Auto-schedule</th>
+            <th>Actions</th>
+        </tr>
+        {% for job in jobs %}
+        <tr>
+            <td>{{ job['label'] }}</td>
+            <td>{{ job['last_run'] or '—' }}</td>
+            <td>
+                {% if job['last_status'] == 'success' %}
+                    <span class="ok">✓ success</span>
+                {% elif job['last_status'] == 'failed' %}
+                    <span class="fail">✗ failed</span>
+                    <div class="error-detail">{{ job['last_error'] }}</div>
+                {% else %}
+                    <span class="pending">not yet run</span>
+                {% endif %}
+            </td>
+            <td>{{ job['last_row_count'] }}</td>
+            <td>
+                <form method="post" action="{{ url_for('set_schedule', job_name=job['name']) }}" class="inline-form">
+                    <select name="minutes">
+                        <option value="0" {% if job['schedule_minutes'] == 0 %}selected{% endif %}>Off (manual only)</option>
+                        <option value="15" {% if job['schedule_minutes'] == 15 %}selected{% endif %}>Every 15 min</option>
+                        <option value="30" {% if job['schedule_minutes'] == 30 %}selected{% endif %}>Every 30 min</option>
+                        <option value="60" {% if job['schedule_minutes'] == 60 %}selected{% endif %}>Every hour</option>
+                        <option value="360" {% if job['schedule_minutes'] == 360 %}selected{% endif %}>Every 6 hours</option>
+                        <option value="1440" {% if job['schedule_minutes'] == 1440 %}selected{% endif %}>Once a day</option>
+                    </select>
+                    <button type="submit">Save</button>
+                </form>
+            </td>
+            <td class="actions">
+                <form method="post" action="{{ url_for('run_now', job_name=job['name']) }}" class="inline-form">
+                    <button type="submit">Run now</button>
+                </form>
+                <a href="{{ url_for('results', job_name=job['name']) }}">Results</a>
+                <a href="{{ url_for('leads', job_name=job['name']) }}">Leads</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
