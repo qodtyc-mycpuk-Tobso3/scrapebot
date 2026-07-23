@@ -107,7 +107,7 @@ def dashboard():
     return render_template("dashboard.html", jobs=jobs)
 
 
-@app.route("/run/<job_name>", methods=["POST"])
+@app.route("/run/<job_name>", methods=["GET", "POST"])
 def run_now(job_name):
     execute_job(job_name)
     return redirect(url_for("dashboard"))
