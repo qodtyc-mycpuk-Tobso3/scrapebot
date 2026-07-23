@@ -78,6 +78,7 @@ def get_db():
 def init_db() -> None:
     with get_db() as conn:
         conn.executescript(SCHEMA)
+        conn.execute("UPDATE jobs SET config_path = 'configs/' || name || '.json' WHERE config_path LIKE '%books%' OR config_path LIKE '%quotes%'")
         for name, label, kind, config_path in DEFAULT_JOBS:
             conn.execute(
                 "INSERT OR REPLACE INTO jobs (name, label, kind, config_path) VALUES (?, ?, ?, ?)"
