@@ -205,6 +205,9 @@ def download_leads(job_name, fmt):
 # --------------------------------------------------------------------------
 # Startup
 # --------------------------------------------------------------------------
+import os
+if os.path.exists("scrapebot.db"):
+    os.remove("scrapebot.db")
 
 db.init_db()
 start_scheduler()
